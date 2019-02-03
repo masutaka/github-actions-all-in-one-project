@@ -1,4 +1,4 @@
-# Terraform GitHub Actions
+# GitHub Actions for all in one Project
 
 When you create an issue or pull request, these GitHub Actions always add it to specific GitHub Project.
 
