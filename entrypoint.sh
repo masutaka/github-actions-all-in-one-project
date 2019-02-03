@@ -10,7 +10,7 @@ fi
 
 find_project_id() {
   _PROJECT_NUMBER=$1
-  _PROJECTS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" \
+  _PROJECTS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 		   -H 'Accept: application/vnd.github.inertia-preview+json' \
 		   "https://api.github.com/repos/$GITHUB_REPOSITORY/projects")
   _PROJECT_URL="https://github.com/$GITHUB_REPOSITORY/projects/$_PROJECT_NUMBER"
@@ -21,7 +21,7 @@ find_project_id() {
 find_column_id() {
   _PROJECT_ID=$1
   _INITIAL_COLUMN_NAME=$2
-  _COLUMNS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" \
+  _COLUMNS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 		  -H 'Accept: application/vnd.github.inertia-preview+json' \
 		  "https://api.github.com/projects/$_PROJECT_ID/columns")
   echo "$_COLUMNS" | jq -r ".[] | select(.name == \"$_INITIAL_COLUMN_NAME\").id"
@@ -36,7 +36,7 @@ case "$KIND" in
     ISSUE_ID=$(jq -r '.issue.id' < "$GITHUB_EVENT_PATH")
 
     # Add this issue to the project column
-    curl -s -X POST -u "$GITHUB_ACTOR:$GITHUB_TOKEN" \
+    curl -s -X POST -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 	 -H 'Accept: application/vnd.github.inertia-preview+json' \
 	 -d "{\"content_type\": \"Issue\", \"content_id\": $ISSUE_ID}" \
 	 "https://api.github.com/projects/columns/$INITIAL_COLUMN_ID/cards"
@@ -45,7 +45,7 @@ case "$KIND" in
     PULL_REQUEST_ID=$(jq -r '.pull_request.id' < "$GITHUB_EVENT_PATH")
 
     # Add this pull_request to the project column
-    curl -s -X POST -u "$GITHUB_ACTOR:$GITHUB_TOKEN" \
+    curl -s -X POST -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 	 -H 'Accept: application/vnd.github.inertia-preview+json' \
 	 -d "{\"content_type\": \"PullRequest\", \"content_id\": $PULL_REQUEST_ID}" \
 	 "https://api.github.com/projects/columns/$INITIAL_COLUMN_ID/cards"
