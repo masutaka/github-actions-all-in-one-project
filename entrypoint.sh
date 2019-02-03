@@ -31,8 +31,8 @@ find_column_id() {
   unset _PROJECT_ID _INITIAL_COLUMN_NAME _COLUMNS
 }
 
-PROJECT_ID=$(find_project_id "$PROJECT_NUMBER")
-INITIAL_COLUMN_ID=$(find_column_id "$PROJECT_ID" "$INITIAL_COLUMN_NAME")
+PROJECT_ID=$(find_project_id "${PROJECT_NUMBER:?<Error> required this environment variable}")
+INITIAL_COLUMN_ID=$(find_column_id "$PROJECT_ID" "${INITIAL_COLUMN_NAME:?<Error> required this environment variable}")
 
 case "$KIND" in
   issue)
