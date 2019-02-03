@@ -14,6 +14,8 @@ When you create an issue or pull request, these GitHub Actions always add it to 
 
 Add the following settings to .github/main.workflow in your repository.
 
+In addition You should probably use [Automation for GitHub Projects](https://help.github.com/articles/about-automation-for-project-boards/).
+
 ### For issues
 
 ```hcl
