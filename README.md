@@ -1,5 +1,13 @@
 # GitHub Actions for all in one Project
 
+[![Docker Automated buil](https://img.shields.io/docker/automated/masutaka/github-actions-all-in-one-project.svg?logo=docker&style=flat-square)][dockerhub]
+[![Docker Stars](https://img.shields.io/docker/stars/masutaka/github-actions-all-in-one-project.svg?style=flat-square)][dockerhub]
+[![Docker Pulls](https://img.shields.io/docker/pulls/masutaka/github-actions-all-in-one-project.svg?style=flat-square)][dockerhub]
+[![License](https://img.shields.io/github/license/masutaka/github-actions-all-in-one-project.svg?style=flat-square)][license]
+
+[dockerhub]: https://hub.docker.com/r/masutaka/github-actions-all-in-one-project/
+[license]: https://github.com/masutaka/github-actions-all-in-one-project/blob/master/LICENSE.txt
+
 When you create an issue or pull request, these GitHub Actions always add it to specific GitHub Project.
 
 ## Usage
