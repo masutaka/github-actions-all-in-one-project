@@ -11,7 +11,7 @@ fi
 find_project_id() {
   _PROJECT_NUMBER=$1
 
-  if [ "$ORG_NAME" ]; then
+  if [ "${ORG_NAME:-}" ]; then
     _ENDPOINT="https://api.github.com/orgs/$ORG_NAME/projects"
   else
     _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
