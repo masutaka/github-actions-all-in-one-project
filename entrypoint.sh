@@ -13,7 +13,7 @@ find_project_id() {
 
   case "${PROJECT_KIND:-repo}" in
     org)
-      _ENDPOINT="https://api.github.com/orgs/${ORG_NAME:<Error> required this environment variable}/projects"
+      _ENDPOINT="https://api.github.com/orgs/${ORG_NAME:?<Error> required this environment variable}/projects"
       ;;
     repo)
       _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
