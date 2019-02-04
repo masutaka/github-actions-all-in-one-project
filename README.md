@@ -72,7 +72,7 @@ action "Add an issue to project" {
 
   env = {
     ORG_NAME            = "example"
-    PROJECT_NUMBER      = "2"       # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
+    PROJECT_NUMBER      = "2"       # required. For https://github.com/orgs/example/projects/2
     INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
   }
 
@@ -86,7 +86,7 @@ action "Add a pull_request to project" {
 
   env = {
     ORG_NAME            = "example"
-    PROJECT_NUMBER      = "2"       # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
+    PROJECT_NUMBER      = "2"       # required. For https://github.com/orgs/example/projects/2
     INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
   }
 
