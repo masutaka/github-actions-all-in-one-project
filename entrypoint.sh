@@ -1,6 +1,6 @@
 #!/bin/sh -eu
 
-KIND=$1
+CONTENT_TYPE=$1
 ACTION=$(jq -r '.action' < "$GITHUB_EVENT_PATH")
 
 if [ "$ACTION" != opened ]; then
@@ -45,7 +45,7 @@ find_column_id() {
 PROJECT_ID=$(find_project_id "${PROJECT_NUMBER:?<Error> required this environment variable}")
 INITIAL_COLUMN_ID=$(find_column_id "$PROJECT_ID" "${INITIAL_COLUMN_NAME:?<Error> required this environment variable}")
 
-case "$KIND" in
+case "$CONTENT_TYPE" in
   issue)
     ISSUE_ID=$(jq -r '.issue.id' < "$GITHUB_EVENT_PATH")
 
@@ -65,7 +65,7 @@ case "$KIND" in
 	 "https://api.github.com/projects/columns/$INITIAL_COLUMN_ID/cards"
     ;;
   *)
-    echo "Invalid arg $KIND" >&2
+    echo "Invalid arg $CONTENT_TYPE" >&2
     exit 1
     ;;
 esac
