@@ -10,12 +10,26 @@ fi
 
 find_project_id() {
   _PROJECT_NUMBER=$1
+
+  case "${PROJECT_KIND:-repo}" in
+    org)
+      _ENDPOINT="https://api.github.com/orgs/${ORG_NAME:<Error> required this environment variable}/projects"
+      ;;
+    repo)
+      _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
+      ;;
+    *)
+      echo "Invarlid PROJECT_KIND $PROJECT_KIND" >&2
+      exit 1
+      ;;
+  esac
+
   _PROJECTS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 		   -H 'Accept: application/vnd.github.inertia-preview+json' \
-		   "https://api.github.com/repos/$GITHUB_REPOSITORY/projects")
+		   "$_ENDPOINT")
   _PROJECT_URL="https://github.com/$GITHUB_REPOSITORY/projects/$_PROJECT_NUMBER"
   echo "$_PROJECTS" | jq -r ".[] | select(.html_url == \"$_PROJECT_URL\").id"
-  unset _PROJECT_NUMBER _PROJECTS _PROJECT_URL
+  unset _PROJECT_NUMBER _ENDPOINT _PROJECTS _PROJECT_URL
 }
 
 find_column_id() {
