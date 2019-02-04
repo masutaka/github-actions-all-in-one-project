@@ -59,3 +59,39 @@ action "Add a pull_request to project" {
   args = ["pull_request"]
 }
 ```
+
+### Organization-wide project
+
+If your project is Organization-wide one, you should add `PROJECT_KIND` and `ORG_NAME` to actions as follows:
+
+```hcl
+action "Add an issue to project" {
+  uses = "docker://masutaka/github-actions-all-in-one-project"
+
+  secrets = ["GITHUB_TOKEN"]
+
+  env = {
+    PROJECT_KIND        = "org"     # required. Always "org"
+    ORG_NAME            = "example" # required if PROJECT_KIND equals to "org"
+    PROJECT_NUMBER      = "2"       # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
+    INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
+  }
+
+  args = ["issue"]
+}
+
+action "Add a pull_request to project" {
+  uses = "docker://masutaka/github-actions-all-in-one-project"
+
+  secrets = ["GITHUB_TOKEN"]
+
+  env = {
+    PROJECT_KIND        = "org"     # required. Always "org"
+    ORG_NAME            = "example" # required if PROJECT_KIND equals to "org"
+    PROJECT_NUMBER      = "2"       # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
+    INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
+  }
+
+  args = ["pull_request"]
+}
+```
