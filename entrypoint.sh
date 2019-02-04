@@ -19,7 +19,7 @@ find_project_id() {
       _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
       ;;
     *)
-      echo "Invarlid PROJECT_KIND $PROJECT_KIND" >&2
+      echo "Invalid PROJECT_KIND $PROJECT_KIND" >&2
       exit 1
       ;;
   esac
@@ -65,7 +65,7 @@ case "$KIND" in
 	 "https://api.github.com/projects/columns/$INITIAL_COLUMN_ID/cards"
     ;;
   *)
-    echo "Invarlid arg $KIND" >&2
+    echo "Invalid arg $KIND" >&2
     exit 1
     ;;
 esac
