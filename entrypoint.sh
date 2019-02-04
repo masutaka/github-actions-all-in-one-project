@@ -11,18 +11,11 @@ fi
 find_project_id() {
   _PROJECT_NUMBER=$1
 
-  case "${PROJECT_KIND:-repo}" in
-    org)
-      _ENDPOINT="https://api.github.com/orgs/${ORG_NAME:?<Error> required this environment variable}/projects"
-      ;;
-    repo)
-      _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
-      ;;
-    *)
-      echo "Invalid PROJECT_KIND $PROJECT_KIND" >&2
-      exit 1
-      ;;
-  esac
+  if [ "$ORG_NAME" ]; then
+    _ENDPOINT="https://api.github.com/orgs/$ORG_NAME/projects"
+  else
+    _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
+  fi
 
   _PROJECTS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 		   -H 'Accept: application/vnd.github.inertia-preview+json' \

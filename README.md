@@ -62,7 +62,7 @@ action "Add a pull_request to project" {
 
 ### Organization-wide project
 
-If your project is Organization-wide, you should add `PROJECT_KIND` and `ORG_NAME` to the actions as follows:
+If your project is Organization-wide, you should set `ORG_NAME` to the actions as follows:
 
 ```hcl
 action "Add an issue to project" {
@@ -71,8 +71,7 @@ action "Add an issue to project" {
   secrets = ["GITHUB_TOKEN"]
 
   env = {
-    PROJECT_KIND        = "org"     # required. Always "org"
-    ORG_NAME            = "example" # required. If PROJECT_KIND equals to "org"
+    ORG_NAME            = "example"
     PROJECT_NUMBER      = "2"       # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
     INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
   }
@@ -86,8 +85,7 @@ action "Add a pull_request to project" {
   secrets = ["GITHUB_TOKEN"]
 
   env = {
-    PROJECT_KIND        = "org"     # required. Always "org"
-    ORG_NAME            = "example" # required. If PROJECT_KIND equals to "org"
+    ORG_NAME            = "example"
     PROJECT_NUMBER      = "2"       # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
     INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
   }
