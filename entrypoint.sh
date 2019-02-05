@@ -1,5 +1,9 @@
 #!/bin/sh -eux
 
+echo "$@"
+env | sort
+jq < "$GITHUB_EVENT_PATH"
+
 CONTENT_TYPE="$1"
 ACTION=$(jq -r '.action' < "$GITHUB_EVENT_PATH")
 
