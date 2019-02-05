@@ -25,16 +25,14 @@ workflow "issues" {
 }
 
 action "Add an issue to project" {
-  uses = "docker://masutaka/github-actions-all-in-one-project"
-
+  uses    = "docker://masutaka/github-actions-all-in-one-project"
   secrets = ["GITHUB_TOKEN"]
+  args    = ["issue"]
 
   env = {
     PROJECT_NUMBER      = "2"     # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
     INITIAL_COLUMN_NAME = "To do" # required. It is added to this column.
   }
-
-  args = ["issue"]
 }
 ```
 
@@ -47,16 +45,14 @@ workflow "pull_requests" {
 }
 
 action "Add a pull_request to project" {
-  uses = "docker://masutaka/github-actions-all-in-one-project"
-
+  uses    = "docker://masutaka/github-actions-all-in-one-project"
   secrets = ["GITHUB_TOKEN"]
+  args    = ["pull_request"]
 
   env = {
     PROJECT_NUMBER      = "2"     # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
     INITIAL_COLUMN_NAME = "To do" # required. It is added to this column.
   }
-
-  args = ["pull_request"]
 }
 ```
 
@@ -66,30 +62,26 @@ If your project is Organization-wide, you should set `ORG_NAME` to the actions a
 
 ```hcl
 action "Add an issue to project" {
-  uses = "docker://masutaka/github-actions-all-in-one-project"
-
+  uses    = "docker://masutaka/github-actions-all-in-one-project"
   secrets = ["GITHUB_TOKEN"]
+  args    = ["issue"]
 
   env = {
     ORG_NAME            = "example"
     PROJECT_NUMBER      = "2"       # required. For https://github.com/orgs/example/projects/2
     INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
   }
-
-  args = ["issue"]
 }
 
 action "Add a pull_request to project" {
-  uses = "docker://masutaka/github-actions-all-in-one-project"
-
+  uses    = "docker://masutaka/github-actions-all-in-one-project"
   secrets = ["GITHUB_TOKEN"]
+  args    = ["pull_request"]
 
   env = {
     ORG_NAME            = "example"
     PROJECT_NUMBER      = "2"       # required. For https://github.com/orgs/example/projects/2
     INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
   }
-
-  args = ["pull_request"]
 }
 ```
