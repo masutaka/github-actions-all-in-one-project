@@ -50,8 +50,8 @@ action "Add a pull_request to project" {
   args    = ["pull_request"]
 
   env = {
-    PROJECT_NUMBER      = "2"     # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
-    INITIAL_COLUMN_NAME = "To do" # required. It is added to this column.
+    PROJECT_NUMBER      = "2"           # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
+    INITIAL_COLUMN_NAME = "In progress" # required. It is added to this column.
   }
 }
 ```
@@ -80,8 +80,8 @@ action "Add a pull_request to project" {
 
   env = {
     ORG_NAME            = "example"
-    PROJECT_NUMBER      = "2"       # required. For https://github.com/orgs/example/projects/2
-    INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
+    PROJECT_NUMBER      = "2"           # required. For https://github.com/orgs/example/projects/2
+    INITIAL_COLUMN_NAME = "In progress" # required. It is added to this column.
   }
 }
 ```
