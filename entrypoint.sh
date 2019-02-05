@@ -10,9 +10,9 @@ fi
 
 find_project_id() {
   _PROJECT_URL=$1
+  _ORG_NAME=$(echo "$_PROJECT_URL" | sed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@')
 
-  if echo $_PROJECT_URL | grep -qF 'https://github.com/orgs/'; then
-    _ORG_NAME=$(echo $_PROJECT_URL | gsed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@')
+  if [ "$_ORG_NAME" ]; then
     _ENDPOINT="https://api.github.com/orgs/$_ORG_NAME/projects"
   else
     _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
