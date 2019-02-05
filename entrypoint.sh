@@ -1,4 +1,4 @@
-#!/bin/sh -eu
+#!/bin/sh -eux
 
 CONTENT_TYPE="$1"
 ACTION=$(jq -r '.action' < "$GITHUB_EVENT_PATH")
