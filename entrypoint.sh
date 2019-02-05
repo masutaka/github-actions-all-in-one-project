@@ -1,6 +1,6 @@
 #!/bin/sh -eu
 
-CONTENT_TYPE=$1
+CONTENT_TYPE="$1"
 ACTION=$(jq -r '.action' < "$GITHUB_EVENT_PATH")
 
 if [ "$ACTION" != opened ]; then
@@ -9,7 +9,7 @@ if [ "$ACTION" != opened ]; then
 fi
 
 find_project_id() {
-  _PROJECT_URL=$1
+  _PROJECT_URL="$1"
 
   if echo "$_PROJECT_URL" | grep -qF 'https://github.com/orgs/'; then
     _ORG_NAME=$(echo "$_PROJECT_URL" | sed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@')
@@ -26,8 +26,8 @@ find_project_id() {
 }
 
 find_column_id() {
-  _PROJECT_ID=$1
-  _INITIAL_COLUMN_NAME=$2
+  _PROJECT_ID="$1"
+  _INITIAL_COLUMN_NAME="$2"
   _COLUMNS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 		  -H 'Accept: application/vnd.github.inertia-preview+json' \
 		  "https://api.github.com/projects/$_PROJECT_ID/columns")
