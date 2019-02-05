@@ -30,8 +30,8 @@ action "Add an issue to project" {
   args    = ["issue"]
 
   env = {
-    PROJECT_NUMBER      = "2"     # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
-    INITIAL_COLUMN_NAME = "To do" # required. It is added to this column.
+    PROJECT_URL         = "https://github.com/masutaka/sandbox-github-actions/projects/2"
+    INITIAL_COLUMN_NAME = "To do"
   }
 }
 ```
@@ -50,38 +50,12 @@ action "Add a pull_request to project" {
   args    = ["pull_request"]
 
   env = {
-    PROJECT_NUMBER      = "2"           # required. For https://github.com/masutaka/sandbox-github-actions/projects/2
-    INITIAL_COLUMN_NAME = "In progress" # required. It is added to this column.
+    PROJECT_URL         = "https://github.com/masutaka/sandbox-github-actions/projects/2"
+    INITIAL_COLUMN_NAME = "In progress"
   }
 }
 ```
 
 ### Organization-wide project
 
-If your project is Organization-wide, you should set `ORG_NAME` to the actions as follows:
-
-```hcl
-action "Add an issue to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
-  secrets = ["GITHUB_TOKEN"]
-  args    = ["issue"]
-
-  env = {
-    ORG_NAME            = "example"
-    PROJECT_NUMBER      = "2"       # required. For https://github.com/orgs/example/projects/2
-    INITIAL_COLUMN_NAME = "To do"   # required. It is added to this column.
-  }
-}
-
-action "Add a pull_request to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
-  secrets = ["GITHUB_TOKEN"]
-  args    = ["pull_request"]
-
-  env = {
-    ORG_NAME            = "example"
-    PROJECT_NUMBER      = "2"           # required. For https://github.com/orgs/example/projects/2
-    INITIAL_COLUMN_NAME = "In progress" # required. It is added to this column.
-  }
-}
-```
+You can set Organization-wide project to `PROJECT_URL`.

@@ -9,10 +9,11 @@ if [ "$ACTION" != opened ]; then
 fi
 
 find_project_id() {
-  _PROJECT_NUMBER=$1
+  _PROJECT_URL=$1
 
-  if [ "${ORG_NAME:-}" ]; then
-    _ENDPOINT="https://api.github.com/orgs/$ORG_NAME/projects"
+  if echo $_PROJECT_URL | grep -qF 'https://github.com/orgs/'; then
+    _ORG_NAME=$(echo $_PROJECT_URL | gsed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@')
+    _ENDPOINT="https://api.github.com/orgs/$_ORG_NAME/projects"
   else
     _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
   fi
@@ -20,9 +21,8 @@ find_project_id() {
   _PROJECTS=$(curl -s -X GET -u "$GITHUB_ACTOR:$GITHUB_TOKEN" --retry 3 \
 		   -H 'Accept: application/vnd.github.inertia-preview+json' \
 		   "$_ENDPOINT")
-  _PROJECT_URL="https://github.com/$GITHUB_REPOSITORY/projects/$_PROJECT_NUMBER"
   echo "$_PROJECTS" | jq -r ".[] | select(.html_url == \"$_PROJECT_URL\").id"
-  unset _PROJECT_NUMBER _ENDPOINT _PROJECTS _PROJECT_URL
+  unset _PROJECT_URL _ORG_NAME _ENDPOINT _PROJECTS
 }
 
 find_column_id() {
@@ -35,7 +35,7 @@ find_column_id() {
   unset _PROJECT_ID _INITIAL_COLUMN_NAME _COLUMNS
 }
 
-PROJECT_ID=$(find_project_id "${PROJECT_NUMBER:?<Error> required this environment variable}")
+PROJECT_ID=$(find_project_id "${PROJECT_URL:?<Error> required this environment variable}")
 INITIAL_COLUMN_ID=$(find_column_id "$PROJECT_ID" "${INITIAL_COLUMN_NAME:?<Error> required this environment variable}")
 
 case "$CONTENT_TYPE" in
