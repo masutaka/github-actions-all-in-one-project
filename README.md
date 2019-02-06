@@ -66,7 +66,7 @@ action "Add a pull_request to project" {
 1. Set the URL of Organization-wide project to `PROJECT_URL`
 1. Set column name you want issue/pull_request at the beginning to `INITIAL_COLUMN_NAME`
 1. Set secrets `MY_GITHUB_TOKEN`
-    1. Create personal access token on https://github.com/settings/tokens
+    1. Create personal access token with `repo` scope on https://github.com/settings/tokens
     1. Create secret `MY_GITHUB_TOKEN` on https://github.com/USER/REPO_NAME/settings/secrets. The value is same to personal access token you created the above
     1. Set `MY_GITHUB_TOKEN` to `secrets` as follows:
 
