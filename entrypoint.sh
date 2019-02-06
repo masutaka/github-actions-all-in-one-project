@@ -33,6 +33,12 @@ find_project_id() {
   _PROJECTS=$(curl -s -X GET -u "$GITHUB_ACTOR:$TOKEN" --retry 3 \
 		   -H 'Accept: application/vnd.github.inertia-preview+json' \
 		   "$_ENDPOINT")
+
+  if [ $(echo "$_PROJECTS" | jq '. | length == 0') = true ]; then
+    echo "No project was found." >&2
+    return 1
+  fi
+
   echo "$_PROJECTS" | jq -r ".[] | select(.html_url == \"$_PROJECT_URL\").id"
   unset _PROJECT_URL _ORG_NAME _ENDPOINT _PROJECTS
 }
@@ -57,6 +63,11 @@ fi
 
 PROJECT_ID=$(find_project_id "$ORG_NAME" "$PROJECT_URL")
 INITIAL_COLUMN_ID=$(find_column_id "$PROJECT_ID" "${INITIAL_COLUMN_NAME:?<Error> required this environment variable}")
+
+if [ -z "$INITIAL_COLUMN_ID" ]; then
+  echo "INITIAL_COLUMN_ID is not found." >&2
+  exit 1
+fi
 
 case "$CONTENT_TYPE" in
   issue)
