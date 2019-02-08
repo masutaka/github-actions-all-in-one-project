@@ -34,7 +34,7 @@ find_project_id() {
 		   -H 'Accept: application/vnd.github.inertia-preview+json' \
 		   "$_ENDPOINT")
 
-  if [ $(echo "$_PROJECTS" | jq '. | length == 0') = true ]; then
+  if [ "$(echo "$_PROJECTS" | jq '. | length == 0')" = true ]; then
     echo "No project was found." >&2
     return 1
   fi
