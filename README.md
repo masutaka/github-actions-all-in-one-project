@@ -8,7 +8,7 @@
 [dockerhub]: https://hub.docker.com/r/masutaka/github-actions-all-in-one-project/
 [license]: https://github.com/masutaka/github-actions-all-in-one-project/blob/master/LICENSE.txt
 
-When you create an issue or pull request, these GitHub Actions always add it to specific GitHub Project.
+Automatically add an issue or pull request to specific [GitHub Project](https://help.github.com/articles/about-project-boards/) when you create them.
 
 ## Usage
 
