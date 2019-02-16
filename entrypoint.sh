@@ -12,23 +12,45 @@ if [ "$ACTION" != opened ]; then
   exit 0
 fi
 
-get_org_name() {
+get_project_type() {
   _PROJECT_URL="$1"
 
-  if echo "$_PROJECT_URL" | grep -qF 'https://github.com/orgs/'; then
-    echo "$_PROJECT_URL" | sed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@'
-  fi
+  case "$_PROJECT_URL" in
+    https://github.com/orgs/*)
+      echo "org"
+      ;;
+    https://github.com/users/*)
+      echo "user"
+      ;;
+    https://github.com/*/projects/*)
+      echo "repo"
+      ;;
+    *)
+      echo "Invalid PROJECT_URL: $_PROJECT_URL" >&2
+      false
+      ;;
+  esac
+
+  unset _PROJECT_URL
 }
 
 find_project_id() {
-  _ORG_NAME="$1"
+  _PROJECT_TYPE="$1"
   _PROJECT_URL="$2"
 
-  if [ "$_ORG_NAME" ]; then
-    _ENDPOINT="https://api.github.com/orgs/$_ORG_NAME/projects"
-  else
-    _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
-  fi
+  case "$_PROJECT_TYPE" in
+    org)
+      _ORG_NAME=$(echo "$_PROJECT_URL" | sed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@')
+      _ENDPOINT="https://api.github.com/orgs/$_ORG_NAME/projects"
+      ;;
+    user)
+      _USER_NAME=$(echo "$_PROJECT_URL" | sed -e 's@https://github.com/users/\([^/]\+\)/projects/[0-9]\+@\1@')
+      _ENDPOINT="https://api.github.com/users/$_USER_NAME/projects"
+      ;;
+    repo)
+      _ENDPOINT="https://api.github.com/repos/$GITHUB_REPOSITORY/projects"
+      ;;
+  esac
 
   _PROJECTS=$(curl -s -X GET -u "$GITHUB_ACTOR:$TOKEN" --retry 3 \
 		   -H 'Accept: application/vnd.github.inertia-preview+json' \
@@ -36,11 +58,11 @@ find_project_id() {
 
   if [ "$(echo "$_PROJECTS" | jq '. | length == 0')" = true ]; then
     echo "No project was found." >&2
-    return 1
+    false
   fi
 
   echo "$_PROJECTS" | jq -r ".[] | select(.html_url == \"$_PROJECT_URL\").id"
-  unset _PROJECT_URL _ORG_NAME _ENDPOINT _PROJECTS
+  unset _PROJECT_TYPE _PROJECT_URL _ORG_NAME _USER_NAME _ENDPOINT _PROJECTS
 }
 
 find_column_id() {
@@ -53,15 +75,15 @@ find_column_id() {
   unset _PROJECT_ID _INITIAL_COLUMN_NAME _COLUMNS
 }
 
-ORG_NAME=$(get_org_name "${PROJECT_URL:?<Error> required this environment variable}")
+PROJECT_TYPE=$(get_project_type "${PROJECT_URL:?<Error> required this environment variable}")
 
-if [ "$ORG_NAME" ]; then
+if [ "$PROJECT_TYPE" = org ] || [ "$PROJECT_TYPE" = repo ]; then
   TOKEN="$MY_GITHUB_TOKEN" # It's User's personal access token. It should be secret.
 else
   TOKEN="$GITHUB_TOKEN"    # GitHub sets. The scope in only the repository containing the workflow file.
 fi
 
-PROJECT_ID=$(find_project_id "$ORG_NAME" "$PROJECT_URL")
+PROJECT_ID=$(find_project_id "$PROJECT_TYPE" "$PROJECT_URL")
 INITIAL_COLUMN_ID=$(find_column_id "$PROJECT_ID" "${INITIAL_COLUMN_NAME:?<Error> required this environment variable}")
 
 if [ -z "$INITIAL_COLUMN_ID" ]; then
