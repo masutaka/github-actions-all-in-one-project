@@ -40,11 +40,11 @@ find_project_id() {
 
   case "$_PROJECT_TYPE" in
     org)
-      _ORG_NAME=$(echo "$_PROJECT_URL" | gsed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@')
+      _ORG_NAME=$(echo "$_PROJECT_URL" | sed -e 's@https://github.com/orgs/\([^/]\+\)/projects/[0-9]\+@\1@')
       _ENDPOINT="https://api.github.com/orgs/$_ORG_NAME/projects"
       ;;
     user)
-      _USER_NAME=$(echo "$_PROJECT_URL" | gsed -e 's@https://github.com/users/\([^/]\+\)/projects/[0-9]\+@\1@')
+      _USER_NAME=$(echo "$_PROJECT_URL" | sed -e 's@https://github.com/users/\([^/]\+\)/projects/[0-9]\+@\1@')
       _ENDPOINT="https://api.github.com/users/$_USER_NAME/projects"
       ;;
     repo)
