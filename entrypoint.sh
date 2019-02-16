@@ -58,7 +58,7 @@ find_project_id() {
 
   if [ "$(echo "$_PROJECTS" | jq '. | length == 0')" = true ]; then
     echo "No project was found." >&2
-    return 1
+    false
   fi
 
   echo "$_PROJECTS" | jq -r ".[] | select(.html_url == \"$_PROJECT_URL\").id"
