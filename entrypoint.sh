@@ -77,7 +77,7 @@ find_column_id() {
 
 PROJECT_TYPE=$(get_project_type "${PROJECT_URL:?<Error> required this environment variable}")
 
-if [ "$PROJECT_TYPE" = org ] || [ "$PROJECT_TYPE" = repo ]; then
+if [ "$PROJECT_TYPE" = org ] || [ "$PROJECT_TYPE" = user ]; then
   TOKEN="$MY_GITHUB_TOKEN" # It's User's personal access token. It should be secret.
 else
   TOKEN="$GITHUB_TOKEN"    # GitHub sets. The scope in only the repository containing the workflow file.
