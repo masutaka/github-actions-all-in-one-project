@@ -30,7 +30,7 @@ workflow "issues" {
 }
 
 action "Add an issue to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
+  uses    = "docker://masutaka/github-actions-all-in-one-project:1.1.0"
   secrets = ["GITHUB_TOKEN"]
   args    = ["issue"]
 
@@ -50,7 +50,7 @@ workflow "pull_requests" {
 }
 
 action "Add a pull_request to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
+  uses    = "docker://masutaka/github-actions-all-in-one-project:1.1.0"
   secrets = ["GITHUB_TOKEN"]
   args    = ["pull_request"]
 
@@ -79,7 +79,7 @@ workflow "issues" {
 }
 
 action "Add an issue to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
+  uses    = "docker://masutaka/github-actions-all-in-one-project:1.1.0"
   secrets = ["MY_GITHUB_TOKEN"]
   args    = ["issue"]
 
@@ -99,7 +99,7 @@ workflow "pull_requests" {
 }
 
 action "Add a pull_request to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
+  uses    = "docker://masutaka/github-actions-all-in-one-project:1.1.0"
   secrets = ["MY_GITHUB_TOKEN"]
   args    = ["pull_request"]
 
@@ -128,7 +128,7 @@ workflow "issues" {
 }
 
 action "Add an issue to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
+  uses    = "docker://masutaka/github-actions-all-in-one-project:1.1.0"
   secrets = ["MY_GITHUB_TOKEN"]
   args    = ["issue"]
 
@@ -148,7 +148,7 @@ workflow "pull_requests" {
 }
 
 action "Add a pull_request to project" {
-  uses    = "docker://masutaka/github-actions-all-in-one-project"
+  uses    = "docker://masutaka/github-actions-all-in-one-project:1.1.0"
   secrets = ["MY_GITHUB_TOKEN"]
   args    = ["pull_request"]
 
