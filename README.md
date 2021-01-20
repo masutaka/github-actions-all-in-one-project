@@ -1,3 +1,5 @@
+# :warning: This repository is obsolete. I recommend to use https://github.com/philschatz/project-bot.
+
 # GitHub Actions for all in one Project
 
 [![Docker Automated buil](https://img.shields.io/docker/automated/masutaka/github-actions-all-in-one-project.svg?logo=docker&style=flat-square)][dockerhub]
